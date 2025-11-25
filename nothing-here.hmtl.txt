@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>There Is Nothing Here</title>
+
+  <style>
+    html,body { height:100%; margin:0; background:#000; color:#fff; overflow-x:hidden; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial; }
+
+    .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:4rem 1rem; position:relative; }
+    .hero a { font-size:clamp(48px,12vw,160px); text-decoration:none; color:white; font-weight:800; letter-spacing:0.02em; user-select:none; transition:opacity .25s ease; cursor:pointer; }
+    .hero a:hover { opacity:0.8; }
+
+    .spacer { height:220000px; background:#000; }
+
+    footer { min-height:40vh; display:flex; align-items:center; justify-content:center; padding:6rem 1rem; }
+    .bottom-link { font-size:clamp(20px,4vw,36px); text-decoration:none; color:white; border:2px solid rgba(255,255,255,0.12); padding:14px 22px; border-radius:10px; background:rgba(255,255,255,0.03); transition:transform .15s ease, box-shadow .15s ease; }
+    .bottom-link:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(255,255,255,0.05); }
+
+    .hint { position:fixed; bottom:12px; left:12px; font-size:12px; color:rgba(255,255,255,0.22); background:rgba(255,255,255,0.05); padding:8px 10px; border-radius:8px; pointer-events:none; transition:opacity .25s ease; }
+
+    .dot { position:fixed; width:6px; height:6px; background:rgba(255,255,255,0.25); border-radius:50%; pointer-events:none; animation:drift 10s infinite linear; }
+    @keyframes drift { 0% { transform:translateY(0px) translateX(0px); opacity:0.4; } 50% { opacity:0.15; } 100% { transform:translateY(-120vh) translateX(40px); opacity:0; } }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <a onclick="alert('Nothing to see here! Keep scrolling…')">
+      THERE IS NOTHING HERE
+    </a>
+  </div>
+
+  <div class="spacer"></div>
+
+  <footer>
+    <a class="bottom-link" href="https://www.roblox.com/users/2700568995/profile" target="_blank">
+      dont click me
+    </a>
+  </footer>
+
+  <div id="hint" class="hint">You're still scrolling…</div>
+
+  <script>
+    const hint=document.getElementById("hint");
+    function updateHint(){
+      const remaining=document.documentElement.scrollHeight-(window.scrollY+window.innerHeight);
+      hint.style.opacity=remaining<400?"0":"1";
+    }
+    window.addEventListener("scroll",updateHint,{passive:true});
+    window.addEventListener("resize",updateHint);
+    updateHint();
+
+    function spawnDot(){
+      const dot=document.createElement("div");
+      dot.classList.add("dot");
+      dot.style.left=Math.random()*window.innerWidth+"px";
+      dot.style.bottom="-10px";
+      dot.style.animationDuration=6+Math.random()*10+"s";
+      document.body.appendChild(dot);
+      setTimeout(()=>dot.remove(),15000);
+    }
+    setInterval(spawnDot,700);
+  </script>
+</body>
+</html>
